@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nota.Id — Menu QR untuk Warung, Kafe &amp; UMKM</title>
+<title>WebResto — Menu QR untuk Warung, Kafe &amp; UMKM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -74,12 +74,12 @@
   .btn{
     display:inline-flex; align-items:center; gap:8px;
     padding:12px 22px; border-radius:3px; font-weight:600; font-size:0.95rem;
-    border:1.5px solid var(--ink); cursor:pointer; transition:transform .15s ease, background .2s ease;
+    border:1.5px solid var(--ink); cursor:pointer; transition:transform .18s ease, background .2s ease, box-shadow .2s ease;
   }
-  .btn-primary{ background:var(--chili); border-color:var(--chili); color:var(--paper); }
-  .btn-primary:hover{ background:var(--chili-dark); border-color:var(--chili-dark); }
+  .btn-primary{ background:var(--chili); border-color:var(--chili); color:var(--paper); box-shadow:0 8px 20px -10px rgba(193,58,38,0.6); }
+  .btn-primary:hover{ background:var(--chili-dark); border-color:var(--chili-dark); transform:translateY(-2px); box-shadow:0 12px 24px -10px rgba(193,58,38,0.55); }
   .btn-ghost{ background:transparent; color:var(--ink); }
-  .btn-ghost:hover{ background:var(--ink); color:var(--paper); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--paper); transform:translateY(-2px); }
   .menu-toggle{
     display:none; width:38px; height:38px; border:1.5px solid var(--ink); border-radius:3px;
     background:none; align-items:center; justify-content:center; flex-direction:column; gap:4px; cursor:pointer; flex-shrink:0;
@@ -106,8 +106,13 @@
   }
 
   /* ===== hero ===== */
-  .hero{ padding:88px 0 70px; }
-  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
+  .hero{
+    padding:88px 0 70px; position:relative; overflow:hidden;
+    background:
+      radial-gradient(circle at 88% 8%, rgba(226,167,59,0.22) 0%, transparent 45%),
+      radial-gradient(circle at 4% 96%, rgba(31,75,68,0.14) 0%, transparent 42%);
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; position:relative; z-index:1; }
   @media(max-width:900px){ .hero-grid{ grid-template-columns:1fr; gap:48px; } }
   @media(max-width:600px){ .hero{ padding:44px 0 52px; } }
   .eyebrow-tag{
@@ -167,13 +172,32 @@
   .problem-head h2{ font-size:clamp(1.9rem,3.4vw,2.6rem); color:var(--paper); }
   .problem-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(251,247,239,0.18); border:1px solid rgba(251,247,239,0.18); }
   @media(max-width:820px){ .problem-grid{ grid-template-columns:1fr; } }
-  .problem-card{ background:var(--teal); padding:34px 30px; }
+  .problem-card{ background:var(--teal); padding:34px 30px; transition:background .25s ease; }
+  .problem-card:hover{ background:var(--teal-light); }
   @media(max-width:600px){ .problem-card{ padding:26px 22px; } }
   .problem-card .pnum{ font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--turmeric); display:block; margin-bottom:18px; }
   .problem-card h3{ font-size:1.2rem; color:var(--paper); margin-bottom:10px; font-weight:600; }
   .problem-card p{ color:rgba(251,247,239,0.72); font-size:0.95rem; }
 
-  /* ===== how it works ===== */
+  /* ===== food category strip ===== */
+  .food-strip{ background:var(--paper); padding:44px 0; border-bottom:1px solid var(--line); }
+  .food-strip-row{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .food-chip{ display:flex; flex-direction:column; align-items:center; gap:10px; flex:1; min-width:110px; text-align:center; }
+  .food-chip .fc-icon{
+    width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    border:1.5px dashed var(--line); transition:transform .2s ease, border-color .2s ease;
+  }
+  .food-chip:hover .fc-icon{ transform:translateY(-4px) scale(1.05); border-color:var(--chili); }
+  .food-chip .fc-icon svg{ width:32px; height:32px; }
+  .food-chip span{ font-size:0.82rem; color:var(--ink-soft); font-weight:500; }
+  @media(max-width:640px){
+    .food-strip{ padding:32px 0; }
+    .food-strip-row{ gap:20px 14px; }
+    .food-chip{ min-width:70px; flex:0 0 calc(33.333% - 14px); }
+    .food-chip .fc-icon{ width:52px; height:52px; }
+    .food-chip .fc-icon svg{ width:26px; height:26px; }
+    .food-chip span{ font-size:0.74rem; }
+  }
   .how-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; margin-top:52px; }
   @media(max-width:820px){ .how-grid{ grid-template-columns:1fr; gap:44px; } }
   .how-step{ position:relative; padding-left:0; }
@@ -200,7 +224,10 @@
   .phone-topbar{ background:var(--teal); color:var(--paper); padding:16px 18px 14px; }
   .phone-topbar .shop{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; }
   .phone-topbar .meja{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; opacity:0.8; margin-top:2px; }
-  .menu-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .menu-item{ display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .mi-thumb{ width:44px; height:44px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .mi-thumb svg{ width:26px; height:26px; }
+  .mi-body{ flex:1; min-width:0; }
   .menu-item .mi-name{ font-weight:600; font-size:0.92rem; }
   .menu-item .mi-desc{ font-size:0.76rem; color:var(--ink-soft); margin-top:2px; }
   .menu-item .mi-price{ font-family:'JetBrains Mono',monospace; font-size:0.82rem; white-space:nowrap; }
@@ -222,7 +249,8 @@
   .price-head h2{ font-size:clamp(1.9rem,3.4vw,2.5rem); }
   .price-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
   @media(max-width:900px){ .price-grid{ grid-template-columns:1fr; max-width:420px; margin:0 auto;} }
-  .price-card{ background:var(--paper); border:1.5px solid var(--line); padding:34px 28px; display:flex; flex-direction:column; }
+  .price-card{ background:var(--paper); border:1.5px solid var(--line); padding:34px 28px; display:flex; flex-direction:column; transition:transform .2s ease, box-shadow .2s ease; }
+  .price-card:hover{ transform:translateY(-4px); box-shadow:0 24px 40px -28px rgba(33,29,24,0.35); }
   @media(max-width:480px){ .price-card{ padding:26px 22px; } }
   .price-card.featured{ border-color:var(--chili); position:relative; box-shadow:0 20px 40px -24px rgba(193,58,38,0.35); }
   .price-card.featured::before{
@@ -243,7 +271,8 @@
   /* ===== testimonials ===== */
   .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:52px; }
   @media(max-width:900px){ .testi-grid{ grid-template-columns:1fr; max-width:480px; margin:52px auto 0; } }
-  .testi-card{ background:var(--paper); border:1px solid var(--line); padding:28px 26px; }
+  .testi-card{ background:var(--paper); border:1px solid var(--line); padding:28px 26px; transition:transform .2s ease, box-shadow .2s ease; }
+  .testi-card:hover{ transform:translateY(-3px); box-shadow:0 20px 34px -26px rgba(33,29,24,0.3); }
   .testi-card p{ font-family:'Fraunces',serif; font-size:1.08rem; line-height:1.45; margin-bottom:22px; color:var(--ink); }
   .testi-who{ display:flex; align-items:center; gap:12px; }
   .testi-who .avatar{ width:38px; height:38px; border-radius:50%; background:var(--turmeric); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; color:var(--ink); font-size:0.95rem; }
@@ -274,14 +303,70 @@
   .foot-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:0.85rem; }
   .foot-row a{ color:rgba(251,247,239,0.75); }
   @media(max-width:600px){ .foot-row{ flex-direction:column; text-align:center; gap:10px; } }
+
+  /* ===== scroll reveal ===== */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media(prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
 </style>
 </head>
 <body>
 
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="icon-rice" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="46" rx="24" ry="8" fill="#E2A73B"/>
+      <path d="M10 40 Q32 54 54 40 L52 32 Q32 42 12 32 Z" fill="#C13A26"/>
+      <path d="M14 30 Q32 40 50 30 Q46 18 32 16 Q18 18 14 30 Z" fill="#E2A73B"/>
+      <circle cx="32" cy="14" r="7" fill="#FBF7EF" stroke="#1F4B44" stroke-width="1.5"/>
+      <circle cx="32" cy="14" r="3" fill="#E2A73B"/>
+      <path d="M20 24 L18 20 M32 21 L32 16 M44 24 L46 20" stroke="#1F4B44" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    </symbol>
+    <symbol id="icon-coffee" viewBox="0 0 64 64">
+      <path d="M16 26 H42 L39 46 Q38 52 32 52 H26 Q20 52 19 46 Z" fill="#1F4B44"/>
+      <path d="M42 30 Q52 30 52 38 Q52 46 42 45" fill="none" stroke="#1F4B44" stroke-width="4"/>
+      <ellipse cx="29" cy="26" rx="13" ry="3" fill="#E2A73B"/>
+      <path d="M24 10 Q20 16 24 20 M32 8 Q28 14 32 18 M40 10 Q36 16 40 20" stroke="#C13A26" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-tea" viewBox="0 0 64 64">
+      <path d="M20 14 H44 L40 50 Q39.5 54 35 54 H29 Q24.5 54 24 50 Z" fill="#FBF7EF" stroke="#1F4B44" stroke-width="2"/>
+      <path d="M22 26 H42 L39.5 48 Q39 51 35 51 H29 Q25 51 24.5 48 Z" fill="#C13A26" opacity="0.85"/>
+      <circle cx="29" cy="34" r="3" fill="#FBF7EF" opacity="0.9"/>
+      <circle cx="36" cy="40" r="2.4" fill="#FBF7EF" opacity="0.9"/>
+      <circle cx="30" cy="44" r="2" fill="#FBF7EF" opacity="0.9"/>
+      <rect x="18" y="12" width="28" height="4" rx="2" fill="#1F4B44"/>
+    </symbol>
+    <symbol id="icon-satay" viewBox="0 0 64 64">
+      <line x1="12" y1="46" x2="50" y2="16" stroke="#1F4B44" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18" y1="52" x2="56" y2="22" stroke="#1F4B44" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="24" cy="40" r="6" fill="#C13A26"/>
+      <circle cx="32" cy="33" r="6" fill="#E2A73B"/>
+      <circle cx="40" cy="26" r="6" fill="#C13A26"/>
+      <circle cx="30" cy="40" r="6" fill="#E2A73B"/>
+      <circle cx="38" cy="33" r="6" fill="#C13A26"/>
+      <circle cx="46" cy="26" r="6" fill="#E2A73B"/>
+    </symbol>
+    <symbol id="icon-bread" viewBox="0 0 64 64">
+      <rect x="12" y="18" width="40" height="30" rx="4" fill="#E2A73B"/>
+      <rect x="16" y="22" width="32" height="22" rx="2" fill="#C13A26"/>
+      <rect x="20" y="26" width="24" height="14" rx="1.5" fill="#FBF7EF" opacity="0.9"/>
+      <path d="M16 18 Q32 8 48 18" fill="none" stroke="#1F4B44" stroke-width="2"/>
+    </symbol>
+    <symbol id="icon-bowl" viewBox="0 0 64 64">
+      <path d="M10 30 H54 Q52 50 32 50 Q12 50 10 30 Z" fill="#1F4B44"/>
+      <ellipse cx="32" cy="30" rx="22" ry="6" fill="#E2A73B"/>
+      <path d="M14 30 Q32 38 50 30" fill="none" stroke="#C13A26" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="30" y="10" width="3" height="16" rx="1.5" fill="#1F4B44" transform="rotate(15 31.5 18)"/>
+    </symbol>
+  </defs>
+</svg>
+
 <header>
   <div class="wrap">
     <div class="nav">
-      <div class="logo"><span class="mark">N</span>Nota.Id</div>
+      <div class="logo"><span class="mark">W</span>WebResto</div>
       <nav class="nav-links">
         <a href="#masalah">Masalah</a>
         <a href="#cara-kerja">Cara Kerja</a>
@@ -349,9 +434,20 @@
   </div>
 </section>
 
+<div class="food-strip">
+  <div class="wrap food-strip-row">
+    <div class="food-chip"><div class="fc-icon" style="background:#FBF0DE;"><svg><use href="#icon-rice"/></svg></div><span>Nasi &amp; Mie</span></div>
+    <div class="food-chip"><div class="fc-icon" style="background:#F1E7D6;"><svg><use href="#icon-coffee"/></svg></div><span>Kopi &amp; Minuman</span></div>
+    <div class="food-chip"><div class="fc-icon" style="background:#F6E3DC;"><svg><use href="#icon-tea"/></svg></div><span>Es &amp; Teh</span></div>
+    <div class="food-chip"><div class="fc-icon" style="background:#F1E7D6;"><svg><use href="#icon-satay"/></svg></div><span>Sate &amp; Gorengan</span></div>
+    <div class="food-chip"><div class="fc-icon" style="background:#FBF0DE;"><svg><use href="#icon-bread"/></svg></div><span>Roti &amp; Snack</span></div>
+    <div class="food-chip"><div class="fc-icon" style="background:#E9EDE4;"><svg><use href="#icon-bowl"/></svg></div><span>Sup &amp; Bakso</span></div>
+  </div>
+</div>
+
 <div class="perf"></div>
 
-<section class="section section-teal" id="masalah">
+<section class="section section-teal reveal" id="masalah">
   <div class="wrap">
     <div class="problem-head">
       <span class="kicker">MASALAH YANG SERING TERJADI</span>
@@ -379,7 +475,7 @@
 
 <div class="perf on-teal"></div>
 
-<section class="section" id="cara-kerja">
+<section class="section reveal" id="cara-kerja">
   <div class="wrap">
     <span class="kicker" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--chili); display:block; margin-bottom:14px;">CARA KERJANYA</span>
     <h2 style="font-size:clamp(1.9rem,3.4vw,2.5rem); max-width:30ch;">Dari meja ke dapur, tanpa kertas dan tanpa tunggu pelayan</h2>
@@ -403,7 +499,7 @@
   </div>
 </section>
 
-<section class="section section-dim">
+<section class="section section-dim reveal">
   <div class="wrap showcase">
     <div class="phone">
       <div class="phone-screen">
@@ -412,15 +508,18 @@
           <div class="meja">MEJA 07 — BUKA</div>
         </div>
         <div class="menu-item">
-          <div><div class="mi-name">Kopi Susu Gula Aren</div><div class="mi-desc">Espresso, susu, gula aren</div></div>
+          <div class="mi-thumb" style="background:#F1E7D6;"><svg><use href="#icon-coffee"/></svg></div>
+          <div class="mi-body"><div class="mi-name">Kopi Susu Gula Aren</div><div class="mi-desc">Espresso, susu, gula aren</div></div>
           <div style="display:flex; align-items:center; gap:10px;"><span class="mi-price">Rp 20rb</span><div class="mi-add">+</div></div>
         </div>
         <div class="menu-item">
-          <div><div class="mi-name">Roti Bakar Cokelat</div><div class="mi-desc">Keju, cokelat, susu kental</div></div>
+          <div class="mi-thumb" style="background:#FBF0DE;"><svg><use href="#icon-bread"/></svg></div>
+          <div class="mi-body"><div class="mi-name">Roti Bakar Cokelat</div><div class="mi-desc">Keju, cokelat, susu kental</div></div>
           <div style="display:flex; align-items:center; gap:10px;"><span class="mi-price">Rp 15rb</span><div class="mi-add">+</div></div>
         </div>
         <div class="menu-item" style="border-bottom:none;">
-          <div><div class="mi-name">Nasi Goreng Kampung</div><div class="mi-desc">Pedas sedang, telur mata sapi</div></div>
+          <div class="mi-thumb" style="background:#FBF0DE;"><svg><use href="#icon-rice"/></svg></div>
+          <div class="mi-body"><div class="mi-name">Nasi Goreng Kampung</div><div class="mi-desc">Pedas sedang, telur mata sapi</div></div>
           <div style="display:flex; align-items:center; gap:10px;"><span class="mi-price">Rp 22rb</span><div class="mi-add">+</div></div>
         </div>
         <div class="phone-cart"><span>3 item dipilih</span><span>Rp 57.000 →</span></div>
@@ -441,7 +540,7 @@
 
 <div class="perf"></div>
 
-<section class="section" id="harga">
+<section class="section reveal" id="harga">
   <div class="wrap">
     <div class="price-head">
       <span class="kicker">PAKET HARGA</span>
@@ -492,7 +591,7 @@
   </div>
 </section>
 
-<section class="section section-dim">
+<section class="section section-dim reveal">
   <div class="wrap">
     <div class="price-head" style="margin-bottom:0;">
       <span class="kicker">KATA MEREKA</span>
@@ -515,7 +614,7 @@
   </div>
 </section>
 
-<section class="section" id="faq">
+<section class="section reveal" id="faq">
   <div class="wrap">
     <div class="price-head">
       <span class="kicker">PERTANYAAN UMUM</span>
@@ -547,20 +646,34 @@
     <h2>Siap bikin antrean di warung Anda hilang?</h2>
     <p>Kirim nama usaha dan menu yang ingin ditampilkan, tim kami hubungi dalam 1x24 jam untuk mulai proses pembuatan.</p>
     <div class="hero-cta">
-      <a href="https://wa.me/6283112137899" class="btn btn-primary">Chat via WhatsApp</a>
-      <a href="mailto:raviachmad35@gmail.com" class="btn btn-ghost">nota.id@gmail.com</a>
+      <a href="https://wa.me/6281234567890" class="btn btn-primary">Chat via WhatsApp</a>
+      <a href="mailto:halo@webresto.id" class="btn btn-ghost">halo@webresto.id</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-row">
-    <span>© 2026 Nota.Id — Jasa Website Menu QR</span>
+    <span>© 2026 WebResto — Jasa Website Menu QR</span>
     <span><a href="#masalah">Masalah</a> &nbsp;·&nbsp; <a href="#cara-kerja">Cara Kerja</a> &nbsp;·&nbsp; <a href="#harga">Harga</a> &nbsp;·&nbsp; <a href="#faq">FAQ</a></span>
   </div>
 </footer>
 
 <script>
+  if('IntersectionObserver' in window){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
   var menuToggle = document.getElementById('menuToggle');
   var mobilePanel = document.getElementById('mobilePanel');
   menuToggle.addEventListener('click', function(){
